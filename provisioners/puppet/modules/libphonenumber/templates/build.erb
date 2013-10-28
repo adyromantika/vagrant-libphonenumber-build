@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd <%= @workpath %>/libphonenumber-read-only/cpp/build
+cmake -DUSE_LITE_METADATA=ON ..
+make
+<%= @workpath %>/libphonenumber-read-only/cpp/build/libphonenumber_test

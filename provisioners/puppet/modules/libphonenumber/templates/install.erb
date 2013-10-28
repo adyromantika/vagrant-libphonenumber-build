@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd <%= @workpath %>/libphonenumber-read-only/cpp/build
+<% if @runas == "root" %>
+make install
+<% else %>
+sudo make install
+<% end %>
