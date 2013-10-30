@@ -1,5 +1,27 @@
 #!/bin/bash
 
 cd <%= @workpath %>/libphonenumber-read-only/cpp/build
-cmake -DUSE_LITE_METADATA=ON ..
+cmake -DUSE_LITE_METADATA=OFF ..
 make && <%= @workpath %>/libphonenumber-read-only/cpp/build/libphonenumber_test
+
+#
+# Manually copy some missing header files, otherwise building projects referencing to libphonenumber will fail
+# https://code.google.com/p/libphonenumber/issues/detail?id=363
+#
+
+if [ ! -f /usr/local/include/phonenumbers/base/template_util.h ]; then
+	sudo cp <%= @workpath %>/libphonenumber-read-only/cpp/src/phonenumbers/base/template_util.h /usr/local/include/phonenumbers/base/template_util.h
+fi
+
+if [ ! -f /usr/local/include/phonenumbers/base/logging.h ]; then
+	sudo cp <%= @workpath %>/libphonenumber-read-only/cpp/src/phonenumbers/base/logging.h /usr/local/include/phonenumbers/base/logging.h
+fi
+
+if [ ! -f /usr/local/include/phonenumbers/base/thread_checker.h ]; then
+	sudo cp <%= @workpath %>/libphonenumber-read-only/cpp/src/phonenumbers/base/thread_checker.h /usr/local/include/phonenumbers/base/thread_checker.h
+fi
+
+if [ ! -f /usr/local/include/phonenumbers/base/memory/singleton_posix.h ]; then
+	sudo cp <%= @workpath %>/libphonenumber-read-only/cpp/src/phonenumbers/base/memory/singleton_posix.h /usr/local/include/phonenumbers/base/memory/singleton_posix.h
+fi
+
